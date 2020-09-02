@@ -1,7 +1,7 @@
 export class Position {
     symbol: string = "";
     quantity: number = 0;
-    price: number = 0;
+    price: number = 1;
     weight: number = 1;
     deltaQuantity: number = 0;
 
