@@ -1,31 +1,31 @@
 <script lang="ts" context="module">
-    import { Account } from "./Account.js";
     import { AlphaVantageClient } from "./AlphaVantageClient.js";
     export const client = new AlphaVantageClient();
 </script>
 
 <script lang="ts">
+    import { account } from "./stores.js";
     import { Position } from "./Position.js";
 
+    import Output from "./Output.svelte";
     import PositionRow from "./PositionCardItem.svelte";
 
-    let account: Account = new Account();
     let isBuyOnly: boolean = false;
     let isCalculating: boolean = false;
 
     function onAddPosition() {
-        account.positions = [...account.positions, new Position()];
+        $account.positions = [...$account.positions, new Position()];
     }
 
     function onRemovePosition(event: {type: string, detail?: any}) {
-        account.positions = account.positions.filter((item) => item !== event.detail.position);
+        $account.positions = $account.positions.filter((item) => item !== event.detail.position);
     }
 
     function onCalculate() {
         try {
             isCalculating = true;
-            account.balance(isBuyOnly);
-            account.positions = account.positions;
+            $account.balance(isBuyOnly);
+            $account.positions = $account.positions;
         } catch (error) {
 
         } finally {
@@ -56,7 +56,7 @@
             <div class="columns">
                 <div class="column is-half">
                     <div class="">
-                        <h4 class="title is-4">Data</h4>
+                        <h4 class="title is-4">Input</h4>
                         <div class="field">
                             <label class="label">API Key</label>
                             <div class="control">
@@ -80,11 +80,11 @@
                                     class="input"
                                     type="number"
                                     placeholder="e.g. 10400.80" 
-                                    bind:value={account.cash}/>
+                                    bind:value={$account.cash}/>
                             </div>
                         </div>
                         <div class="columns is-multiline">
-                            {#each account.positions as position}
+                            {#each $account.positions as position}
                                 <div class="column is-one-third">
                                     <PositionRow
                                         {position}
@@ -126,7 +126,8 @@
                 </div>
                 <div class="column is-half">
                     <div class="">
-                        <h4 class="title is-4">Graph</h4>
+                        <h4 class="title is-4">Output</h4>
+                        <Output/>
                     </div>
                 </div>
             </div>

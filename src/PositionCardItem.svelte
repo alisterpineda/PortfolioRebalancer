@@ -71,16 +71,5 @@
         <div class="control">
           <input class="input is-small" type="number" placeholder="e.g. 20" bind:value={position.weight}>
         </div>
-      </div>
-      <hr>
-      <div class="has-text-centered">
-      {#if position.deltaQuantity > 0}
-      <p class="buy-result">BUY <b>{position.deltaQuantity}</b></p>
-      {:else if position.deltaQuantity < 0}
-      <p class="sell-result">SELL <b>{Math.abs(position.deltaQuantity)}</b></p>
-      {:else}
-      ---
-      {/if}
-      </div>
-    
+      </div>    
 </div>
