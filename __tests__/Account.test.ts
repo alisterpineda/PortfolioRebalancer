@@ -54,32 +54,64 @@ describe("Class 'Account'", () => {
     });
 
     describe("function 'balance'", () => {
-        beforeEach(() => {
-            subject.cash = 50000.00;
-            subject.positions = [
-                new Position({symbol: 'abc', quantity: 20, price: 1000.00, weight: 10}),
-                new Position({symbol: 'def', quantity: 5, price: 2000.00, weight: 30}),
-                new Position({symbol: 'ghi', quantity: 4, price: 5000.00, weight: 60})
-            ];
-        });
-        test("with buyOnly set to false", () => {
-            const initialScore = subject.getScore();
-
-            subject.balance();
-
-            expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
-            expect(subject.getScore()).toBeLessThan(initialScore);
-            expect(subject.getAllocation(subject.positions[0], true)).toBeCloseTo(0.10);
-            expect(subject.getAllocation(subject.positions[1], true)).toBeCloseTo(0.30);
-            expect(subject.getAllocation(subject.positions[2], true)).toBeCloseTo(0.60);
-        });
-        test("with buyOnly set to true", () => {
-            const initialScore = subject.getScore();
-
-            subject.balance(true);
-
-            expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
-            expect(subject.getScore()).toBeLessThan(initialScore);
-        });
+        describe("with a mix of cash and stocks", () => {
+            beforeEach(() => {
+                subject.cash = 50000.00;
+                subject.positions = [
+                    new Position({symbol: 'abc', quantity: 20, price: 1000.00, weight: 10}),
+                    new Position({symbol: 'def', quantity: 5, price: 2000.00, weight: 30}),
+                    new Position({symbol: 'ghi', quantity: 4, price: 5000.00, weight: 60})
+                ];
+            });
+            test("with buyOnly set to false", () => {
+                const initialScore = subject.getScore();
+    
+                subject.balance();
+    
+                expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
+                expect(subject.getScore()).toBeLessThan(initialScore);
+                expect(subject.getAllocation(subject.positions[0], true)).toBeCloseTo(0.10);
+                expect(subject.getAllocation(subject.positions[1], true)).toBeCloseTo(0.30);
+                expect(subject.getAllocation(subject.positions[2], true)).toBeCloseTo(0.60);
+            });
+            test("with buyOnly set to true", () => {
+                const initialScore = subject.getScore();
+    
+                subject.balance(true);
+    
+                expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
+                expect(subject.getScore()).toBeLessThan(initialScore);
+            });
+        })
+        describe("with only cash", () => {
+            beforeEach(() => {
+                subject.cash = 20000.00;
+                subject.positions = [
+                    new Position({symbol: 'abc', quantity: 0, price: 20, weight: 90}),
+                    new Position({symbol: 'def', quantity: 0, price: 30, weight: 10})
+                ];
+            });
+            test("with buyOnly set to false", () => {
+                const initialScore = subject.getScore();
+    
+                subject.balance();
+    
+                expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
+                expect(subject.getScore()).toBeLessThan(initialScore);
+                expect(subject.getAllocation(subject.positions[0], true)).toBeCloseTo(0.90);
+                expect(subject.getAllocation(subject.positions[1], true)).toBeCloseTo(0.10);
+            });
+            test("with buyOnly set to true", () => {
+                const initialScore = subject.getScore();
+    
+                subject.balance(true);
+    
+                expect(subject.getTotalValue(true)).toBe(subject.getTotalValue());
+                expect(subject.getScore()).toBeLessThan(initialScore);
+                expect(subject.getAllocation(subject.positions[0], true)).toBeCloseTo(0.90);
+                expect(subject.getAllocation(subject.positions[1], true)).toBeCloseTo(0.10);
+            });
+        })
+        
     });
 })

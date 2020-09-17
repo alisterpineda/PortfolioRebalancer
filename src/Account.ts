@@ -73,17 +73,15 @@ export class Account {
                     this.deltaCash = originalDeltaCash;
                 }
 
-                if (!buyOnly) {
-                    if ((position.quantity + position.deltaQuantity) > 0) {
-                        position.deltaQuantity = originalDeltaQuantity - 1;
-                        this.deltaCash = originalDeltaCash + position.price;
-                        if (this.getScore() < lastScore) {
-                            continue;
-                        }
-                        position.deltaQuantity = originalDeltaQuantity;
-                        this.deltaCash = originalDeltaCash;
-                    
+                if ((position.quantity + position.deltaQuantity) > 0 && (!buyOnly || (position.quantity + position.deltaQuantity) > position.quantity)) {
+                    position.deltaQuantity = originalDeltaQuantity - 1;
+                    this.deltaCash = originalDeltaCash + position.price;
+                    if (this.getScore() < lastScore) {
+                        continue;
                     }
+                    position.deltaQuantity = originalDeltaQuantity;
+                    this.deltaCash = originalDeltaCash;
+                
                 }
             }
         } while(this.getScore() < lastScore);
