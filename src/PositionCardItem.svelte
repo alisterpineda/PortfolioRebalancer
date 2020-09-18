@@ -20,21 +20,14 @@
             position.price = await client.fetchPrice(position.symbol);
         } catch (error) {
             console.error(error);
+            dispatch("error", {
+              message: error
+            })
         } finally {
             isFetchingPrice = false;
         }
     }
 </script>
-
-<style>
-  .buy-result {
-    color: green;
-  }
-
-  .sell-result {
-    color: red;
-  }
-</style>
 
 <div class="box">
     <button class="delete is-pulled-right" on:click={onDelete}></button>

@@ -7,11 +7,14 @@
     import * as _ from "lodash";
 
     import { inputAccount, outputAccount } from "./stores.js";
+    import { Notification } from "./Notification";
     import { Position } from "./Position.js";
 
+    import NotificationItem from "./NotificationItem.svelte"
     import Output from "./Output.svelte";
     import PositionRow from "./PositionCardItem.svelte";
 
+    let notifications: Notification[] = [];
     let isBuyOnly: boolean = false;
     let isCalculating: boolean = false;
 
@@ -21,6 +24,18 @@
 
     function onRemovePosition(event: {type: string, detail?: any}) {
         $inputAccount.positions = $inputAccount.positions.filter((item) => item !== event.detail.position);
+    }
+
+    function createNotification(message: string){
+        notifications = [...notifications, new Notification(message)];
+    }
+
+    function onDimissNotification(event: {type: string, detail?: any}) {
+        notifications = notifications.filter((item) => item !== event.detail.notification)
+    }
+
+    function onComponentError(event: {type: string, detail?: any}) {
+        createNotification(event.detail.message);
     }
 
     async function onCalculate() {
@@ -41,6 +56,13 @@
         margin-top: 3em;
         margin-bottom: 3em;
     }
+
+    .notification-group {
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 </style>
 
 <svelte:head>
@@ -51,10 +73,14 @@
 
 
 <main>
+    <div class="notification-group">
+        {#each notifications as notification}
+        <NotificationItem notification={notification} on:dismiss={onDimissNotification}/>
+        {/each}
+    </div>
     <section class="section">
         <div class="container">
             <h1 class="title">Portfolio Rebalancer</h1>
-
             <div class="columns">
                 <div class="column is-half">
                     <div class="">
@@ -90,7 +116,8 @@
                                 <div class="column is-one-third">
                                     <PositionRow
                                         {position}
-                                        on:delete={onRemovePosition} />
+                                        on:delete={onRemovePosition}
+                                        on:error={onComponentError} />
                                 </div>
                             {/each}
                         </div>
@@ -135,5 +162,4 @@
             </div>
         </div>
     </section>
-
 </main>
