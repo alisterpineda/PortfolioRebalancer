@@ -34,6 +34,13 @@ export class Account {
         return position.getValue(includeDelta) / this.getTotalValue(includeDelta);
     }
 
+    getTargetAllocation(position: Position): number {
+        if (this.positions.indexOf(position) < 0) {
+            // error
+        }
+        return position.weight / this.getTotalWeight();
+    }
+
     getScore(): number {
         let subScore = 0;
         subScore += this.getCashSubScore();

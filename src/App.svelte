@@ -4,7 +4,9 @@
 </script>
 
 <script lang="ts">
-    import { account } from "./stores.js";
+    import * as _ from "lodash";
+
+    import { inputAccount, outputAccount } from "./stores.js";
     import { Position } from "./Position.js";
 
     import Output from "./Output.svelte";
@@ -14,18 +16,18 @@
     let isCalculating: boolean = false;
 
     function onAddPosition() {
-        $account.positions = [...$account.positions, new Position()];
+        $inputAccount.positions = [...$inputAccount.positions, new Position()];
     }
 
     function onRemovePosition(event: {type: string, detail?: any}) {
-        $account.positions = $account.positions.filter((item) => item !== event.detail.position);
+        $inputAccount.positions = $inputAccount.positions.filter((item) => item !== event.detail.position);
     }
 
-    function onCalculate() {
+    async function onCalculate() {
         try {
             isCalculating = true;
-            $account.balance(isBuyOnly);
-            $account.positions = $account.positions;
+            $inputAccount.balance(isBuyOnly);
+            $outputAccount = _.cloneDeep($inputAccount);
         } catch (error) {
 
         } finally {
@@ -80,11 +82,11 @@
                                     class="input"
                                     type="number"
                                     placeholder="e.g. 10400.80" 
-                                    bind:value={$account.cash}/>
+                                    bind:value={$inputAccount.cash}/>
                             </div>
                         </div>
                         <div class="columns is-multiline">
-                            {#each $account.positions as position}
+                            {#each $inputAccount.positions as position}
                                 <div class="column is-one-third">
                                     <PositionRow
                                         {position}
