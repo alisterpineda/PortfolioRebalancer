@@ -6,14 +6,17 @@ export class AlphaVantageClient {
 
     async fetchPrice(symbol: string): Promise<number> {
         return fetch(this.baseUrl + `?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${this.apiKey}`)
-            .then(response => response.json())
-            .then(json => {
-                const price = parseFloat(json['Global Quote']['05. price'])
-                if (!isNaN(price)){
-                    return price
-                } else {
-                    throw new Error("Could not retrieve price!");
+            .then(response => {
+                if (response.status !== 200) {
+                    throw `An AlphaVantage error occurred.\n${response.status}: ${response.text()}`;
                 }
+                return response.json();
+            })
+            .then(json => {
+                if (json['Global Quote'] == null) {
+                    throw `An AlphaVantage error occurred.\n${json['Information'] || JSON.stringify(json)}}`;
+                }
+                return parseFloat(json['Global Quote']['05. price'])
             })
     }
 }
