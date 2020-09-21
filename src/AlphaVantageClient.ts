@@ -13,8 +13,8 @@ export class AlphaVantageClient {
                 return response.json();
             })
             .then(json => {
-                if (json['Global Quote'] == null) {
-                    throw `An AlphaVantage error occurred.\n${json['Information'] || JSON.stringify(json)}}`;
+                if (json['Global Quote'] == null || json['Global Quote']['05. price'] == null) {
+                    throw `An AlphaVantage error occurred.\n${JSON.stringify(json)}}`;
                 }
                 window.localStorage.setItem("apiKey", JSON.stringify(this.apiKey)); // save API key for next session
                 return parseFloat(json['Global Quote']['05. price'])
