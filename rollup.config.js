@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import copy from 'rollup-plugin-copy'
+import postcss from 'rollup-plugin-postcss';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -52,18 +53,9 @@ export default {
 			css: css => {
 				css.write('public/build/bundle.css');
 			},
-			preprocess: sveltePreprocess({
-				transformers: {
-				  scss: {
-					includePaths: [
-					  'node_modules',
-					  'src'
-					]
-				  }
-				}
-			  }),
+			preprocess: sveltePreprocess(),
 		}),
-
+		postcss(),
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
 		// some cases you'll need additional configuration -
