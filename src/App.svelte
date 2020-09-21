@@ -167,15 +167,6 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="level-right">
-                                <div class="field is-grouped">
-                                    <p class="control">
-                                        <button class="button is-danger">
-                                            Clear All
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <hr />
