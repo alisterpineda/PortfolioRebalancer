@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
     import { AlphaVantageClient } from "./AlphaVantageClient.js";
-    export const client = new AlphaVantageClient();
 </script>
 
 <script lang="ts">
@@ -8,7 +7,7 @@
 
     import { onMount } from "svelte";
 
-    import { inputAccount, outputAccount } from "./stores";
+    import { inputAccount, outputAccount, alphaVantageClient } from "./stores";
     import { Notification } from "./Notification";
     import { Account } from "./Account";
     import { Position } from "./Position";
@@ -22,8 +21,20 @@
     let isCalculating: boolean = false;
 
     onMount(async () => {
+        loadApiKey();
         loadAccount();
     });
+
+    function loadApiKey() {
+        const apiKeyJson = window.localStorage.getItem("apiKey");
+        if (apiKeyJson != null) {
+            const apiKey: string = JSON.parse(apiKeyJson);
+            if (apiKey != null) {
+                $alphaVantageClient.apiKey = apiKey;
+                console.log("Loaded API key from Local Storage");
+            }
+        }
+    }
 
     function loadAccount() {
         const cashJson = window.localStorage.getItem("accountCash");
@@ -42,6 +53,7 @@
                     newPos.weight = pos.weight;
                     $inputAccount.positions = [...$inputAccount.positions, newPos];
                 }
+                console.log("Loaded account data from Local Storage");
             }
         }
     }
@@ -125,7 +137,7 @@
                                 <input
                                     class="input"
                                     type="text"
-                                    bind:value={client.apiKey} />
+                                    bind:value={$alphaVantageClient.apiKey} />
                             </div>
                             <p class="help">
                                 Used to fetch prices from Alpha Vantage. Get

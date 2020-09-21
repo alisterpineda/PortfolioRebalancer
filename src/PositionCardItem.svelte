@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
+    import { alphaVantageClient } from "./stores";
     import type { Position } from "./Position";
-    import { client } from "./App.svelte";
 
     const dispatch = createEventDispatcher();
     export let position: Position;
@@ -17,7 +17,7 @@
     async function onFetchPrice() {
         isFetchingPrice = true;
         try {
-            position.price = await client.fetchPrice(position.symbol);
+            position.price = await $alphaVantageClient.fetchPrice(position.symbol);
         } catch (error) {
             console.error(error);
             dispatch("error", {
