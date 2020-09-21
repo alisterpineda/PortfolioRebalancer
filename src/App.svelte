@@ -6,9 +6,12 @@
 <script lang="ts">
     import * as _ from "lodash";
 
-    import { inputAccount, outputAccount } from "./stores.js";
+    import { onMount } from "svelte";
+
+    import { inputAccount, outputAccount } from "./stores";
     import { Notification } from "./Notification";
-    import { Position } from "./Position.js";
+    import { Account } from "./Account";
+    import { Position } from "./Position";
 
     import NotificationItem from "./NotificationItem.svelte"
     import Output from "./Output.svelte";
@@ -17,6 +20,36 @@
     let notifications: Notification[] = [];
     let isBuyOnly: boolean = false;
     let isCalculating: boolean = false;
+
+    onMount(async () => {
+        loadAccount();
+    });
+
+    function loadAccount() {
+        const cashJson = window.localStorage.getItem("accountCash");
+        const positionsJson = window.localStorage.getItem("accountPositions");
+        if (cashJson != null && positionsJson != null) {
+            const cash: number = JSON.parse(cashJson);
+            const positions: Position[] = JSON.parse(positionsJson);
+            if (cash != null && positions != null) {
+                $inputAccount = new Account();
+                $inputAccount.cash = cash;
+                for (var pos of positions) {
+                    const newPos = new Position();
+                    newPos.symbol = pos.symbol;
+                    newPos.quantity = pos.quantity;
+                    newPos.price = pos.price;
+                    newPos.weight = pos.weight;
+                    $inputAccount.positions = [...$inputAccount.positions, newPos];
+                }
+            }
+        }
+    }
+
+    function saveAccount() {
+        window.localStorage.setItem("accountCash", JSON.stringify($inputAccount.cash));
+        window.localStorage.setItem("accountPositions", JSON.stringify($inputAccount.positions));
+    }
 
     function onAddPosition() {
         $inputAccount.positions = [...$inputAccount.positions, new Position()];
@@ -43,8 +76,9 @@
             isCalculating = true;
             $inputAccount.balance(isBuyOnly);
             $outputAccount = _.cloneDeep($inputAccount);
+            saveAccount();
         } catch (error) {
-
+            console.log(`error: ${error}`);
         } finally {
             isCalculating = false;
         }
