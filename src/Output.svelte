@@ -35,5 +35,5 @@
 <p class="extra-info">{($outputAccount.getAllocation(position, false)*100).toFixed(2)}% &rarr; {($outputAccount.getAllocation(position, true)*100).toFixed(2)}% (target: {($outputAccount.getTargetAllocation(position)*100).toFixed(2)}%)</p>
 {/if}
 {/each}
-<b>${$outputAccount.cash + $outputAccount.deltaCash}</b> in cash remaining
+<b>${($outputAccount.cash + $outputAccount.deltaCash).toFixed(2)}</b> in cash remaining
 {/if}
