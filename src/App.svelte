@@ -163,7 +163,7 @@
                                     bind:value={$alphaVantageClient.apiKey} />
                             </div>
                             <p class="help">
-                                Used to fetch prices from Alpha Vantage. Get
+                                Optional. Used to fetch prices from Alpha Vantage. Get
                                 your API key
                                 <a
                                     href="https://www.alphavantage.co/support/#api-key"
