@@ -1,7 +1,3 @@
-<script lang="ts" context="module">
-    import { AlphaVantageClient } from "./AlphaVantageClient.js";
-</script>
-
 <script lang="ts">
     import * as _ from "lodash";
 
