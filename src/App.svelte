@@ -84,6 +84,7 @@
     }
 
     async function onCalculate() {
+        if (!isValidCalculation()) return;
         try {
             isCalculating = true;
             $inputAccount.balance(isBuyOnly);
@@ -94,6 +95,32 @@
         } finally {
             isCalculating = false;
         }
+    }
+
+    function isValidCalculation(): boolean {
+        if (isNaN($inputAccount.cash) ||  $inputAccount.cash < 0) {
+            createNotification("'Cash Balance' must be a number that is greater than or equal to zero.");
+            return false;
+        }
+        for (let position of $inputAccount.positions) {
+            if (!position.symbol || position.symbol.length === 0) {
+                createNotification("The symbol value of each stock position must not be empty.");
+                return false;
+            }
+            if (position.quantity == null || isNaN(position.quantity) || position.quantity < 0) {
+                createNotification(`The quantity of '${position.symbol}' must be a number that is greater than or equal to zero.`);
+                return false;
+            }
+            if (position.price == null ||  isNaN(position.price) || position.price <= 0) {
+                createNotification(`The price of '${position.symbol}' must be a number that is greater than zero.`);
+                return false;
+            }
+            if (position.weight == null ||  isNaN(position.weight) || position.weight <= 0) {
+                createNotification(`The weight of '${position.symbol}' must be a number that is greater than zero.`);
+                return false;
+            }
+        }
+        return true;
     }
 </script>
 
