@@ -224,7 +224,11 @@
     </section>
     <footer class="footer">
         <div class="content has-text-centered">
-            <b>Portfolio Rebalancer</b> by <a href="https://alisterpineda.com">Alister Pineda</a>. The <a href="https://github.com/alisterpineda/PortfolioRebalancer">source code</a> is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+            <a class="button is-white fa-2x" href="https://github.com/alisterpineda/PortfolioRebalancer" target="_blank">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+            </a>
         </div>
     </footer>
 </main>
