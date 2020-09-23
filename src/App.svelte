@@ -135,8 +135,8 @@
 </style>
 
 <svelte:head>
+    <title>Portfolio Rebalancer</title>
     <style src="style.scss">
-
     </style>
 </svelte:head>
 
