@@ -1,6 +1,6 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
-    import { fade, fly } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import type { Notification } from "./Notification";
 
     const dispatch = createEventDispatcher();
