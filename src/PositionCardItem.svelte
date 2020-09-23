@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="field">
-        <label class="label is-small">Quantity</label>
+        <label class="label is-small">Units Owned</label>
         <div class="control">
           <input class="input is-small" type="number" placeholder="e.g. 7" bind:value={position.quantity}>
         </div>
