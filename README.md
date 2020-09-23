@@ -22,17 +22,17 @@ The *Account* has a hidden variable called the *Score* which is the square root 
 
 A *Subscore* of an asset like the cash balance or a stock position is calculated by the following equation:
 
-![equation](https://latex.codecogs.com/svg.latex?\left({A_{\textrm{target}}-A_{\textrm{current}}}\right)^2)
+![equation](docs/eqn0.svg)
 
 where 
 
-![equation](https://latex.codecogs.com/svg.latex?A_{\textrm{target}}=\frac{W_{\textrm{asset}}}{W_{\textrm{account}}}=\textrm{Target%20Allocation})
+![equation](docs/eqn1.svg)
 
-![equation](https://latex.codecogs.com/svg.latex?A_{\textrm{current}}=\frac{V_{\textrm{asset}}}{V_{\textrm{account}}}=\textrm{Current%20Allocation})
+![equation](docs/eqn2.svg)
 
-![equation](https://latex.codecogs.com/svg.latex?W=\textrm{Weight%20of%20a%20single%20asset%20or%20the%20entire%20Account})
+![equation](docs/eqn3.svg)
 
-![equation](https://latex.codecogs.com/svg.latex?V=\textrm{Value%20(quantity%20x%20price)%20of%20a%20single%20asset%20or%20the%20entire%20Account})
+![equation](docs/eqn4.svg)
 
 With the given equations so far, it should be clear that the *Score* is the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) between the two points, the current *Account* and the target *Account*, where the number of dimensions depend on the number of stock positions.
 
