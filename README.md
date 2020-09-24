@@ -14,6 +14,24 @@ Try it yourself @ https://demo-portfoliorebalancer.alisterpineda.com
 2. Assuming Node.js is installed, run `npm install` in the shell of your choice in the repo directory.
 3. Run `npm run dev`
 
+## How To Use
+
+### Top-Level Controls
+
+**Cash Balance** : The amount of cash available in the investment account.
+
+**Buy Only**: If checked, the app will, as much as it can, rebalance the account without selling. This is useful when there are costs to selling shares.
+
+### Stock Position Controls
+
+**Symbol**: The abbreviated unique identifier of the stock. This value is used when fetching a quote from Alpha Vantage.
+
+**Units Owned**: The number of shares owned.
+
+**Price**: The price of a single share of the stock.
+
+**Weight**: This value determines the target allocation for the stock in the investment account. The allocation for the stock would be its weight divided by the total weight of the investment account. *For example, stock A with a weight of 20 and stock B with a weight of 30 will have target allocations of 20/50=40% and 30/50=60% respectively.*
+
 ## How It Works
 
 The cash balance and stock positions provided to the app are considered collectively as the *Account*.
