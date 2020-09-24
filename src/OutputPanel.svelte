@@ -16,6 +16,7 @@
     }
 </style>
 
+<h4 class="title is-4">Output</h4>
 {#if $outputAccount != null}
 {#each $outputAccount.positions as position}
 {#if position.deltaQuantity > 0}
