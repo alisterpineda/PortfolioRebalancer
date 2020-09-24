@@ -1,15 +1,12 @@
 <script lang="ts">
-    import { createEventDispatcher } from "svelte";
     import { fly } from 'svelte/transition';
+    import { notificationService } from "./stores";
     import type { Notification } from "./Notification";
 
-    const dispatch = createEventDispatcher();
     export let notification: Notification;
 
     function onDismiss() {
-        dispatch("dismiss", {
-            notification: notification
-        });
+        $notificationService.dismissNotification(notification);
     }
 </script>
 
