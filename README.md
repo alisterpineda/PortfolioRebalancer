@@ -1,4 +1,4 @@
-# PortfolioRebalancer
+# Portfolio Rebalancer
 ![Build](https://github.com/alisterpineda/PortfolioRebalancer/workflows/Build/badge.svg)
 
 A simple Svelte web application tool that calculates the amount of stocks to buy and sell in order to achieve the desired asset allocation in an investment portfolio. 
