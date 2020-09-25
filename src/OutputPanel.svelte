@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { outputAccount } from "./stores.js";
+    import { outputAccount, numberFormatter, currencyFormatter, percentFormatter } from "./stores.js";
 </script>
 
 <style>
@@ -22,50 +22,28 @@
         {#each $outputAccount.positions as position}
             {#if position.deltaQuantity > 0}
                 <p class="buy-result">
-                    Buy <b>{position.deltaQuantity}</b> units of <b>{position.symbol}</b>
-                </p>
-                <p class="extra-info">
-                    {position.quantity} &rarr; {position.quantity + position.deltaQuantity}
-                </p>
-                <p class="extra-info">
-                    ${position.getValue(false).toFixed(2)} &rarr; ${position.getValue(true).toFixed(2)}
-                </p>
-                <p class="extra-info">
-                    {($outputAccount.getAllocation(position, false) * 100).toFixed(2)}%
-                    &rarr; {($outputAccount.getAllocation(position, true) * 100).toFixed(2)}%
-                    (target: {($outputAccount.getTargetAllocation(position) * 100).toFixed(2)}%)
+                    Buy <b>{$numberFormatter.format(position.deltaQuantity)}</b> units of <b>{position.symbol}</b>
                 </p>
             {:else if position.deltaQuantity < 0}
                 <p class="sell-result">
-                    Sell <b>{Math.abs(position.deltaQuantity)}</b> units of <b>{position.symbol}</b>
-                </p>
-                <p class="extra-info">
-                    {position.quantity} &rarr; {position.quantity + position.deltaQuantity}
-                </p>
-                <p class="extra-info">
-                    ${position.getValue(false).toFixed(2)} &rarr; ${position.getValue(true).toFixed(2)}
-                </p>
-                <p class="extra-info">
-                    {($outputAccount.getAllocation(position, false) * 100).toFixed(2)}%
-                    &rarr; {($outputAccount.getAllocation(position, true) * 100).toFixed(2)}%
-                    (target: {($outputAccount.getTargetAllocation(position) * 100).toFixed(2)}%)
+                    Sell <b>{$numberFormatter.format(Math.abs(position.deltaQuantity))}</b> units of <b>{position.symbol}</b>
                 </p>
             {:else}
                 <p><b>{position.symbol}</b> stays the same</p>
-                <p class="extra-info">
-                    {position.quantity} &rarr; {position.quantity + position.deltaQuantity}
-                </p>
-                <p class="extra-info">
-                    ${position.getValue(false).toFixed(2)} &rarr; ${position.getValue(true).toFixed(2)}
-                </p>
-                <p class="extra-info">
-                    {($outputAccount.getAllocation(position, false) * 100).toFixed(2)}%
-                    &rarr; {($outputAccount.getAllocation(position, true) * 100).toFixed(2)}%
-                    (target: {($outputAccount.getTargetAllocation(position) * 100).toFixed(2)}%)
-                </p>
             {/if}
+            <p class="extra-info">
+                {$numberFormatter.format(position.quantity)} &rarr; {$numberFormatter.format(position.quantity + position.deltaQuantity)}
+            </p>
+            <p class="extra-info">
+                {$currencyFormatter.format(position.getValue(false))} &rarr; {$currencyFormatter.format(position.getValue(true))}
+            </p>
+            <p class="extra-info">
+                {$percentFormatter.format($outputAccount.getAllocation(position, false))}
+                &rarr; {$percentFormatter.format($outputAccount.getAllocation(position, true))}
+                (target: {$percentFormatter.format($outputAccount.getTargetAllocation(position))})
+            </p>
         {/each}
-        <b>${($outputAccount.cash + $outputAccount.deltaCash).toFixed(2)}</b> in
+        <b>{$currencyFormatter.format($outputAccount.cash + $outputAccount.deltaCash)}</b> in
         cash remaining
     {:else}
         <article class="message">
