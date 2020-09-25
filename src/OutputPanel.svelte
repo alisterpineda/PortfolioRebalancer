@@ -40,7 +40,7 @@
 {:else}
 <article class="message">
     <div class="message-body">
-        There's nothing to show you yet... <br>Fill out the relevant details under the Input panel and then click the "Calculate" button.
+        There is nothing to see here for now. <br>Fill out the relevant details under the Input panel and then click the "Calculate" button.
     </div>
 </article>
 {/if}
