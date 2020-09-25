@@ -122,9 +122,9 @@
                 bind:value={$inputAccount.cash}/>
         </div>
     </div>
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-desktop">
         {#each $inputAccount.positions as position}
-            <div class="column is-one-third">
+            <div class="column is-half-desktop is-one-third-fullhd">
                 <PositionRow
                     {position}
                     on:delete={onRemovePosition}/>
