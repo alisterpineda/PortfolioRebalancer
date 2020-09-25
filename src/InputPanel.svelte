@@ -94,7 +94,7 @@
     }
 </script>
 
-<div class="">
+<section class="section">
     <h4 class="title is-4">Input</h4>
     <div class="field">
         <label class="label">API Key</label>
@@ -144,7 +144,6 @@
             </div>
         </div>
     </div>
-</div>
 <hr />
 <button class="button is-primary is-fullwidth" class:is-loading={isCalculating} on:click={onCalculate}>
     Calculate
@@ -153,3 +152,4 @@
     <input type="checkbox" bind:checked={isBuyOnly}/>
     Buy Only
 </label>
+</section>
