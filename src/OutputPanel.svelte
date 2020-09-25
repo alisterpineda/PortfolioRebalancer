@@ -37,4 +37,10 @@
 {/if}
 {/each}
 <b>${($outputAccount.cash + $outputAccount.deltaCash).toFixed(2)}</b> in cash remaining
+{:else}
+<article class="message">
+    <div class="message-body">
+        There's nothing to show you yet... <br>Fill out the relevant details under the Input panel and then click the "Calculate" button.
+    </div>
+</article>
 {/if}
